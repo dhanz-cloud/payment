@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRIS Payment - dhanz panel</title>
+    <style>
+        :root {
+            --neon-red: #ff0000;
+            --bg-dark: #0a0a0a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Container utama dengan laser */
+        .qris-container {
+            position: relative;
+            width: 320px;
+            height: 450px;
+            background: #151515;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Efek Laser Merah Berputar */
+        .qris-container::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(transparent, transparent, transparent, var(--neon-red));
+            animation: rotate-laser 3s linear infinite;
+            z-index: 1;
+        }
+
+        /* Overlay Hitam */
+        .qris-container::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            background: #111;
+            border-radius: 15px;
+            z-index: 2;
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Foto QRIS */
+        .qris-image {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: white; /* Memberi kontras jika QRIS transparan */
+            border: 2px solid rgba(255, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        /* Tulisan Shimmer */
+        .shimmer-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #ff0000 0%, #ffffff 50%, #ff0000 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 2s linear infinite;
+        }
+
+        /* Area Tombol */
+        .button-group {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border: 1px solid var(--neon-red);
+            font-size: 14px;
+        }
+
+        .btn-download {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-download:hover {
+            box-shadow: 0 0 20px var(--neon-red);
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            background: transparent;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Ganti URL_FOTO_ANDA dengan link foto yang Anda inginkan */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://files.catbox.moe/9p6mxc.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        /* Animasi */
+        @keyframes rotate-laser {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="qris-container">
+        <div class="content">
+            <img src="" alt="QRIS DHANZ" id="qrisImage" class="qris-image">
+            
+            <div class="shimmer-text">SCAN QRIS DHANZ</div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="btn btn-download" onclick="downloadQRIS()">Download Foto</button>
+        <button class="btn btn-back" onclick="window.history.back()">Kembali</button>
+    </div>
+
+    <script>
+        // === GANTI LINK FOTO  ===
+        const urlGambar = "https://files.catbox.moe/jk56sy.jpg";
+        // ====================================
+
+        // kecot
+        const imgElement = document.getElementById('qrisImage');
+        imgElement.src = urlGambar;
+
+        async function downloadQRIS() {
+            try {
+                const response = await fetch(urlGambar);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'qris-payment-dhanz'; // Nama file hasil download
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                alert("Gagal mengunduh gambar. Pastikan link gambar mengizinkan akses (CORS).");
+            }
+        }
+    </script>
+
+</body>
+</html>

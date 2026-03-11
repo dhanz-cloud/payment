@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dhanz panel - Payment</title>
+    <style>
+        :root {
+            --neon-red: #ff0000;
+            --bg-dark: #0a0a0a;
+            --dana-blue: #008ced; /* Warna asli DANA, tapi kita akan buat logonya merah sesuai permintaan */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .payment-card {
+            position: relative;
+            width: 400px;
+            padding: 40px;
+            background: #151515;
+            border-radius: 15px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Animasi Garis Laser Merah */
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--neon-red));
+            animation: rotate-laser 4s linear infinite;
+            z-index: 1;
+        }
+
+
+
+        .payment-card::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: #151515;
+            border-radius: 12px;
+            z-index: 2;
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+        }
+body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Ganti URL_FOTO_ANDA dengan link foto yang Anda inginkan */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://files.catbox.moe/9p6mxc.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        h2 { margin-bottom: 20px; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-size: 1.2em; }
+        
+        .instruction { font-size: 1.1em; color: var(--neon-red); margin: 15px 0; font-weight: bold; }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        /* Tombol DANA Khusus */
+        .btn-dana {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* Logo DANA Merah */
+        .dana-logo {
+            color: var(--neon-red);
+            font-style: italic;
+            font-weight: 900;
+            font-size: 1.2em;
+        }
+
+        .btn-dana:hover {
+            background: #f0f0f0;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tombol Navigasi QRIS */
+        .btn-next {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--neon-red);
+            padding: 12px 25px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-next:hover {
+            background: var(--neon-red);
+            box-shadow: 0 0 20px var(--neon-red);
+        }
+
+        @keyframes rotate-laser {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-card">
+        <div class="content">
+            <h2>Metode Pembayaran</h2>
+            <div class="instruction">PILIH DANA ATAU QRIS</div>
+            
+            <div class="payment-options">
+                <a href="https://link.dana.id/qr/085640489536" class="btn-dana">
+                    <span class="dana-logo">DANA</span>
+                    Bayar via DANA
+                </a>
+
+                <span>Atau gunakan</span>
+
+                <button class="btn-next" onclick="goToQris()">via qris</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToQris() {
+            // Berpindah ke file qris.html
+            window.location.href = "qris.html"; 
+        }
+    </script>
+
+</body>
+</html>
